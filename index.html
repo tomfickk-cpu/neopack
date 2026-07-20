@@ -486,6 +486,30 @@ nav a:hover::after { width: 100%; }
 
 .pricing-card ul li::before { content: '▸'; color: var(--matrix-green); }
 
+.pricing-enterprise .extra-benefits {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+.pricing-enterprise:hover .extra-benefits {
+  max-height: 600px;
+  opacity: 1;
+}
+.pricing-enterprise .hover-hint {
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--neon-cyan);
+  opacity: 0.6;
+  padding: 4px 0 0;
+  transition: opacity 0.3s;
+  cursor: default;
+}
+.pricing-enterprise:hover .hover-hint {
+  opacity: 0;
+}
+
 /* FAQ */
 .faq {
   padding: 100px 0;
@@ -1097,7 +1121,7 @@ footer .logo { margin-bottom: 12px; display: block; }
         </ul>
         <a href="checkout.html?plano=pro" class="btn btn-primary" style="width:100%;justify-content:center;">▸ COMPRAR PRO</a>
       </div>
-      <div class="pricing-card featured">
+      <div class="pricing-card featured pricing-enterprise">
         <div style="position:absolute;top:-12px;right:-12px;background:#ff4444;color:#fff;padding:6px 14px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;box-shadow:0 0 20px rgba(255,50,50,0.5);">🔥 PROMOÇÃO ATIVA</div>
         <h3>ENTERPRISE</h3>
         <div class="sub">Sob medida · Tempo limitado</div>
@@ -1116,21 +1140,26 @@ footer .logo { margin-bottom: 12px; display: block; }
           <li>Atualizações vitalícias</li>
           <li>Versão empresa (devs ilimitados)</li>
           <li>Multi-projeto automático</li>
-          <li style="color:var(--neon-cyan);font-weight:600;">Canal privado Telegram/Discord direto com equipe</li>
-          <li>Acesso antecipado beta a novos agentes e MCPs</li>
-          <li>Prioridade máxima em atualizações e lançamentos</li>
-          <li style="color:var(--neon-cyan);font-weight:600;">Treinamento online ao vivo da sua equipe (2h)</li>
-          <li>Relatórios mensais de desempenho dos agentes</li>
-          <li>Pipeline CI/CD personalizado e pré-configurado</li>
-          <li>Integração com sistemas e ferramentas existentes</li>
-          <li style="color:var(--neon-cyan);font-weight:600;">Certificado de Parceiro Oficial NeoPack</li>
-          <li>Consultoria técnica mensal (1h dedicada)</li>
-          <li>Ambiente de staging gerenciado</li>
-          <li>Backup e restore automático de configurações</li>
-          <li>Garantia de compatibilidade estendida</li>
-          <li>Namespace empresarial dedicado</li>
-          <li style="color:var(--neon-cyan);font-weight:600;">SLA de resposta em até 4h úteis</li>
         </ul>
+        <div class="extra-benefits">
+          <ul>
+            <li style="color:var(--neon-cyan);font-weight:600;">Canal privado Telegram/Discord direto com equipe</li>
+            <li>Acesso antecipado beta a novos agentes e MCPs</li>
+            <li>Prioridade máxima em atualizações e lançamentos</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">Treinamento online ao vivo da sua equipe (2h)</li>
+            <li>Relatórios mensais de desempenho dos agentes</li>
+            <li>Pipeline CI/CD personalizado e pré-configurado</li>
+            <li>Integração com sistemas e ferramentas existentes</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">Certificado de Parceiro Oficial NeoPack</li>
+            <li>Consultoria técnica mensal (1h dedicada)</li>
+            <li>Ambiente de staging gerenciado</li>
+            <li>Backup e restore automático de configurações</li>
+            <li>Garantia de compatibilidade estendida</li>
+            <li>Namespace empresarial dedicado</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">SLA de resposta em até 4h úteis</li>
+          </ul>
+        </div>
+        <span class="hover-hint">🖱 Passe o mouse para ver +13 benefícios exclusivos</span>
         <a href="checkout.html?plano=enterprise" class="btn btn-primary" style="width:100%;justify-content:center;background:#ff4444;box-shadow:0 0 30px rgba(255,50,50,0.4);">▸ GARANTIR PROMOÇÃO</a>
       </div>
     </div>
