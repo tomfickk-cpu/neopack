@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Instalação — NeoPack</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --matrix-green: #00ff41; --matrix-dim: #003b00; --matrix-glow: rgba(0,255,65,0.3);
+  --bg-dark: #0a0a0a; --bg-card: #0d0d0d; --text: #c0c0c0; --text-bright: #e0e0e0;
+  --neon-cyan: #00f0ff; --neon-purple: #b000ff;
+}
+body {
+  background: var(--bg-dark); color: var(--text);
+  font-family: 'JetBrains Mono', monospace; min-height: 100vh;
+}
+.container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+h1 {
+  font-family: 'Orbitron', monospace; font-size: 2rem; color: var(--matrix-green);
+  text-align: center; margin-bottom: 8px; text-shadow: 0 0 30px var(--matrix-glow);
+}
+.subtitle { text-align: center; color: var(--text); font-size: 0.85rem; margin-bottom: 40px; }
+
+.step-card {
+  background: var(--bg-card); border: 1px solid rgba(0,255,65,0.12);
+  border-radius: 8px; padding: 32px; margin-bottom: 24px;
+  position: relative; overflow: hidden;
+}
+.step-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%; background: var(--matrix-green);
+  box-shadow: 0 0 10px var(--matrix-glow);
+}
+.step-number {
+  font-family: 'Orbitron', monospace; font-size: 0.8rem; color: var(--matrix-green);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.step-number::before {
+  content: ''; display: inline-block; width: 24px; height: 24px;
+  background: var(--matrix-green); color: var(--bg-dark);
+  border-radius: 50%; text-align: center; line-height: 24px;
+  font-weight: 700; font-size: 0.75rem;
+}
+.step-card:nth-child(2) .step-number::before { content: '1'; }
+.step-card:nth-child(3) .step-number::before { content: '2'; }
+.step-card:nth-child(4) .step-number::before { content: '3'; }
+.step-card:nth-child(5) .step-number::before { content: '4'; }
+.step-card:nth-child(6) .step-number::before { content: '5'; }
+.step-card:nth-child(7) .step-number::before { content: '6'; }
+
+.step-card h2 {
+  font-family: 'Orbitron', monospace; font-size: 1.1rem;
+  color: var(--text-bright); margin-bottom: 12px;
+}
+.step-card p, .step-card li {
+  font-size: 0.85rem; line-height: 1.8; color: var(--text);
+}
+.step-card ul { list-style: none; margin: 12px 0; }
+.step-card ul li::before { content: '▸ '; color: var(--matrix-green); }
+.step-card ul li { padding: 4px 0; }
+
+.code-block {
+  background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.15);
+  border-radius: 6px; padding: 16px; margin: 12px 0;
+  font-size: 0.8rem; color: var(--matrix-green); overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+}
+.code-block .comment { color: rgba(255,255,255,0.3); }
+.code-block .cmd { color: var(--neon-cyan); }
+.code-block .output { color: var(--text); }
+
+.platform-tabs {
+  display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.platform-tab {
+  padding: 8px 16px; border: 1px solid rgba(0,255,65,0.2);
+  border-radius: 4px; cursor: pointer; font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace; background: transparent;
+  color: var(--text); transition: all 0.3s;
+}
+.platform-tab.active { background: rgba(0,255,65,0.15); color: var(--matrix-green); border-color: var(--matrix-green); }
+.platform-tab:hover { border-color: var(--matrix-green); color: var(--matrix-green); }
+
+.tag {
+  display: inline-block; padding: 2px 10px; border-radius: 3px;
+  font-size: 0.65rem; font-weight: 700; margin-left: 8px;
+}
+.tag-win { background: rgba(0,255,65,0.15); color: var(--matrix-green); }
+.tag-linux { background: rgba(0,240,255,0.15); color: var(--neon-cyan); }
+.tag-mac { background: rgba(176,0,255,0.15); color: var(--neon-purple); }
+.tag-all { background: rgba(255,255,255,0.1); color: var(--text-bright); }
+
+.tip {
+  background: rgba(0,255,65,0.06); border: 1px solid rgba(0,255,65,0.15);
+  border-radius: 6px; padding: 16px; margin: 16px 0; font-size: 0.8rem;
+}
+.tip strong { color: var(--matrix-green); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: 4px; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer; text-decoration: none;
+  transition: all 0.3s; border: none; margin: 4px;
+}
+.btn-primary { background: var(--matrix-green); color: var(--bg-dark); box-shadow: 0 0 20px var(--matrix-glow); }
+.btn-primary:hover { box-shadow: 0 0 40px var(--matrix-glow); transform: translateY(-2px); }
+.btn-outline { background: transparent; color: var(--matrix-green); border: 1px solid var(--matrix-green); }
+.btn-outline:hover { background: rgba(0,255,65,0.1); }
+
+footer { text-align: center; padding: 40px 0; border-top: 1px solid rgba(0,255,65,0.05); margin-top: 40px; }
+footer p { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  .step-card { padding: 24px; }
+  .code-block { font-size: 0.7rem; padding: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="obrigado.html" style="color:var(--matrix-green);font-size:0.8rem;display:inline-block;margin-bottom:24px;">← Voltar</a>
+
+  <h1>▸ GUIA DE INSTALAÇÃO</h1>
+  <p class="subtitle">Siga os passos abaixo para instalar o NeoPack no seu computador</p>
+
+  <div class="platform-tabs">
+    <span class="platform-tab active" onclick="showPlatform('win')">🪟 Windows</span>
+    <span class="platform-tab" onclick="showPlatform('linux')">🐧 Linux</span>
+    <span class="platform-tab" onclick="showPlatform('mac')">🍎 macOS</span>
+    <span class="platform-tab" onclick="showPlatform('docker')">🐳 Docker</span>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-number">PRÉ-REQUISITOS</div>
+    <h2>📋 O que você precisa ter instalado</h2>
+    <ul>
+      <li><strong>Node.js 18+</strong> — <a href="https://nodejs.org" style="color:var(--matrix-green);" target="_blank">nodejs.org</a> (recomendado: versão 20 LTS)</li>
+      <li><strong>Python 3.10+</strong> — <a href="https://python.org" style="color:var(--matrix-green);" target="_blank">python.org</a></li>
+      <li><strong>Git 2.30+</strong> — <a href="https://git-scm.com" style="color:var(--matrix-green);" target="_blank">git-scm.com</a></li>
+      <li><strong>Go 1.21+</strong> (opcional, apenas para agentes Go) — <a href="https://go.dev" style="color:var(--matrix-green);" target="_blank">go.dev</a></li>
+    </ul>
+    <div class="tip">
+      <strong>💡 Dica:</strong> Para verificar o que já tem instalado, abra o terminal e digite:
+      <div class="code-block">node --version<br>python --version<br>git --version</div>
+      Se aparecer a versão, está OK. Se não, instale o que faltar.
+    </div>
+  </div>
+
+  <!-- STEP 2 - WINDOWS -->
+  <div class="step-card plat-win">
+    <div class="step-number">PASSO 1</div>
+    <h2>📦 Extraia o pacote</h2>
+    <p>Após o download, localize o arquivo <strong>NeoPack-PRO-v3.0.0.zip</strong> (ou Enterprise).</p>
+    <div class="code-block"><span class="comment"># Clique com o botão direito no ZIP → "Extrair tudo"</span><br>
+<span class="comment"># Escolha uma pasta de destino (ex: C:\NeoPack)</span></div>
+    <p>A estrutura extraída será:</p>
+    <div class="code-block"><span class="comment">C:\NeoPack\</span><br>
+  ├── <span class="cmd">scripts\</span>          <span class="comment"># Scripts de instalação</span><br>
+  ├── <span class="cmd">config\</span>           <span class="comment"># Arquivos de configuração</span><br>
+  ├── <span class="cmd">.opencode\agents\</span>  <span class="comment"># Arquivos dos 48 agentes</span><br>
+  ├── <span class="cmd">README.md</span>          <span class="comment"># Instruções</span><br>
+  └── <span class="cmd">LICENSE.txt</span>        <span class="comment"># Sua licença</span></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card plat-win">
+    <div class="step-number">PASSO 2</div>
+    <h2>⚡ Execute o setup (1 clique)</h2>
+    <p>Clique com o botão direito no script <strong>setup.ps1</strong> e escolha <strong>"Executar com PowerShell"</strong> (como Administrador).</p>
+    <p>Ou manualmente:</p>
+    <div class="code-block"><span class="cmd">cd</span> C:\NeoPack\scripts<br>
+<span class="cmd">powershell -ExecutionPolicy Bypass -File</span> setup.ps1</div>
+    <div class="tip">
+      <strong>⚠️ Importante:</strong> Execute <strong>como Administrador</strong>. O script vai instalar pacotes npm globais e precisa de permissão.
+    </div>
+    <p><strong>O que o script faz automaticamente:</strong></p>
+    <ul>
+      <li>Verifica Node.js, Python e Git</li>
+      <li>Instala o OpenCode CLI globalmente</li>
+      <li>Instala todos os <strong>12 MCP Servers</strong> (Puppeteer, Playwright, GitHub, Brave Search, PostgreSQL, Redis, Figma, Notion, etc.)</li>
+      <li>Instala os <strong>7 LSPs</strong> (TypeScript, HTML, CSS, JSON, Python, Markdown, Go)</li>
+      <li>Instala os <strong>3 formatters</strong> (Prettier, Ruff, Gofmt)</li>
+      <li>Cria o projeto <strong>~/NeoPack-PRO</strong> com todos os 48 agentes configurados</li>
+    </ul>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card plat-win">
+    <div class="step-number">PASSO 3</div>
+    <h2>🔑 Configure sua chave de API</h2>
+    <p>O OpenCode precisa de uma chave de API para funcionar. Você pode usar o modelo gratuito (DeepSeek) ou modelos pagos.</p>
+    <div class="code-block"><span class="comment"># Abra o terminal e digite:</span><br>
+<span class="cmd">opencode auth login</span><br>
+<span class="output">✓ Autenticado com sucesso!</span></div>
+    <p>O modelo padrão já é o <strong>DeepSeek V4 Flash (gratuito)</strong>. Se quiser models premium (Go), configure manualmente.</p>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step-card plat-win">
+    <div class="step-number">PASSO 4</div>
+    <h2>🚀 Pronto! Use o NeoPack</h2>
+    <p>Navegue até a pasta do projeto e inicie o OpenCode:</p>
+    <div class="code-block"><span class="cmd">cd</span> ~\NeoPack-PRO<br>
+<span class="cmd">opencode</span></div>
+    <p>Agora você tem <strong>48 agentes especialistas</strong> disponíveis. Teste alguns comandos:</p>
+    <div class="code-block"><span class="comment"># Exemplos de uso:</span><br>
+<span class="cmd">/agent</span> rust-dev        <span class="comment"># Agente Rust</span><br>
+<span class="cmd">/agent</span> docker-agent   <span class="comment"># Agente Docker/K8s</span><br>
+<span class="cmd">/agent</span> postgres-agent <span class="comment"># Agente PostgreSQL</span><br>
+<span class="cmd">/agent</span> security-audit <span class="comment"># Agente de Segurança</span><br>
+<span class="cmd">/agent</span> mlops-agent    <span class="comment"># Agente MLOps</span><br>
+<span class="cmd">/agent</span> web3-agent     <span class="comment"># Agente Web3/Blockchain</span></div>
+  </div>
+
+  <!-- LINUX SECTION -->
+  <div class="step-card plat-linux" style="display:none;">
+    <div class="step-number">PASSO 1</div>
+    <h2>📦 Extraia e execute</h2>
+    <div class="code-block"><span class="comment"># Extraia o pacote</span><br>
+<span class="cmd">unzip</span> NeoPack-PRO-v3.0.0.zip -d ~/NeoPack-PRO<br>
+<br>
+<span class="comment"># Execute o setup</span><br>
+<span class="cmd">chmod +x</span> ~/NeoPack-PRO/scripts/setup.sh<br>
+<span class="cmd">sudo</span> ~/NeoPack-PRO/scripts/setup.sh</div>
+  </div>
+
+  <div class="step-card plat-linux" style="display:none;">
+    <div class="step-number">PASSO 2</div>
+    <h2>🔑 Configure e use</h2>
+    <div class="code-block"><span class="cmd">opencode auth login</span><br>
+<span class="cmd">cd</span> ~/NeoPack-PRO<br>
+<span class="cmd">opencode</span></div>
+  </div>
+
+  <!-- MAC SECTION -->
+  <div class="step-card plat-mac" style="display:none;">
+    <div class="step-number">PASSO 1</div>
+    <h2>📦 Extraia e execute</h2>
+    <div class="code-block"><span class="comment"># Extraia o pacote</span><br>
+<span class="cmd">unzip</span> NeoPack-PRO-v3.0.0.zip -d ~/NeoPack-PRO<br>
+<br>
+<span class="comment"># Execute o setup</span><br>
+<span class="cmd">chmod +x</span> ~/NeoPack-PRO/scripts/setup-macos.sh<br>
+<span class="cmd">./</span>~/NeoPack-PRO/scripts/setup-macos.sh</div>
+  </div>
+
+  <div class="step-card plat-mac" style="display:none;">
+    <div class="step-number">PASSO 2</div>
+    <h2>🔑 Configure e use</h2>
+    <div class="code-block"><span class="cmd">opencode auth login</span><br>
+<span class="cmd">cd</span> ~/NeoPack-PRO<br>
+<span class="cmd">opencode</span></div>
+  </div>
+
+  <!-- DOCKER SECTION -->
+  <div class="step-card plat-docker" style="display:none;">
+    <div class="step-number">ALTERNATIVA</div>
+    <h2>🐳 Usando Docker</h2>
+    <p>O NeoPack já vem com Dockerfile pronto. Use em qualquer ambiente com Docker:</p>
+    <div class="code-block"><span class="comment"># Build da imagem</span><br>
+<span class="cmd">docker build</span> -t neopack .<br>
+<br>
+<span class="comment"># Execute</span><br>
+<span class="cmd">docker run -it</span> --rm neopack</div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="step-card" style="border-color: rgba(255,200,0,0.2);">
+    <div class="step-number">🔧 SOLUÇÃO DE PROBLEMAS</div>
+    <h2>Problemas comuns e soluções</h2>
+    <ul>
+      <li><strong>"npm não é reconhecido":</strong> Instale o Node.js em nodejs.org e reinicie o terminal</li>
+      <li><strong>"ExecutionPolicy" bloqueado:</strong> Execute: <span style="color:var(--matrix-green);">Set-ExecutionPolicy Unrestricted -Scope CurrentUser</span></li>
+      <li><strong>"python não encontrado":</strong> Instale Python em python.org e marque "Add to PATH"</li>
+      <li><strong>"Permission denied" (Linux/Mac):</strong> Use <span style="color:var(--matrix-green);">sudo</span> antes do comando</li>
+      <li><strong>MCP server não conecta:</strong> O script instala todos globalmente. Se falhar, instale manualmente com <span style="color:var(--matrix-green);">npm install -g @anthropic/mcp-server-puppeteer</span></li>
+    </ul>
+    <div class="tip">
+      <strong>📧 Suporte:</strong> Plano PRO: 7 dias de suporte por e-mail. Plano Enterprise: Suporte VIP 30 dias + setup remoto. Envie um e-mail para <strong>neopack@email.com</strong>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:32px;">
+    <a href="obrigado.html" class="btn btn-primary">← VOLTAR AO DOWNLOAD</a>
+    <a href="index.html" class="btn btn-outline">← SITE PRINCIPAL</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2026 NeoPack — Guia de Instalação v3.0.0</p>
+  </div>
+</footer>
+
+<script>
+function showPlatform(platform) {
+  document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.plat-win, .plat-linux, .plat-mac, .plat-docker').forEach(e => e.style.display = 'none');
+  document.querySelector(`.platform-tab[onclick*="'${platform}'"]`).classList.add('active');
+  document.querySelectorAll(`.plat-${platform}`).forEach(e => e.style.display = 'block');
+}
+// Default: show Windows
+showPlatform('win');
+</script>
+</body>
+</html>
