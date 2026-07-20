@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Confirmado — NeoPack</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --matrix-green: #00ff41; --matrix-glow: rgba(0,255,65,0.3);
+  --bg-dark: #0a0a0a; --bg-card: #0d0d0d; --text: #c0c0c0; --text-bright: #e0e0e0;
+}
+body {
+  background: var(--bg-dark); color: var(--text);
+  font-family: 'JetBrains Mono', monospace; min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.container { max-width: 650px; padding: 40px 24px; text-align: center; }
+.icon { font-size: 4rem; margin-bottom: 16px; }
+h1 {
+  font-family: 'Orbitron', monospace; font-size: 1.8rem; color: var(--matrix-green);
+  margin-bottom: 8px; text-shadow: 0 0 30px var(--matrix-glow);
+}
+.subtitle { color: var(--text); font-size: 0.85rem; margin-bottom: 32px; }
+.card {
+  background: var(--bg-card); border: 1px solid rgba(0,255,65,0.15);
+  border-radius: 8px; padding: 32px; margin-bottom: 24px; text-align: left;
+}
+.card h3 { font-family: 'Orbitron', monospace; color: var(--matrix-green); font-size: 0.95rem; margin-bottom: 16px; }
+.info-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+.info-label { color: var(--text); }
+.info-value { color: var(--text-bright); font-weight: 600; }
+.download-box {
+  background: rgba(0,255,65,0.05); border: 1px solid var(--matrix-green);
+  border-radius: 8px; padding: 32px; margin-bottom: 24px;
+}
+.download-box h2 { font-family: 'Orbitron', monospace; color: var(--matrix-green); font-size: 1.2rem; margin-bottom: 16px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 40px; border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s; border: none; text-decoration: none;
+}
+.btn-primary {
+  background: var(--matrix-green); color: var(--bg-dark); box-shadow: 0 0 30px var(--matrix-glow);
+}
+.btn-primary:hover { box-shadow: 0 0 60px var(--matrix-glow); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: var(--matrix-green);
+  border: 1px solid var(--matrix-green); margin-top: 12px;
+}
+.btn-outline:hover { background: rgba(0,255,65,0.1); }
+.invalid { color: #ff4646; }
+.invalid h1 { color: #ff4646; text-shadow: 0 0 30px rgba(255,50,50,0.3); }
+@media (max-width: 600px) {
+  .card { padding: 20px; }
+  .download-box { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="validPage">
+  <div class="icon">🎉</div>
+  <h1>PEDIDO CONFIRMADO!</h1>
+  <p class="subtitle">Seu pagamento foi aprovado. Seu download está pronto.</p>
+
+  <div class="card">
+    <h3>📋 RESUMO DO PEDIDO</h3>
+    <div class="info-row">
+      <span class="info-label">Cliente</span>
+      <span class="info-value" id="resumoNome">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">E-mail</span>
+      <span class="info-value" id="resumoEmail">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Plano</span>
+      <span class="info-value" id="resumoPlano">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Data</span>
+      <span class="info-value" id="resumoData">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Pedido</span>
+      <span class="info-value" id="resumoID">—</span>
+    </div>
+    <div class="info-row" style="border-bottom:none;">
+      <span class="info-label">Assinatura</span>
+      <span class="info-value" id="resumoAssinatura" style="font-family:'Orbitron',monospace;color:var(--matrix-green);">—</span>
+    </div>
+  </div>
+
+  <div class="download-box" id="downloadBox">
+    <h2>⬇️ SEU DOWNLOAD</h2>
+    <p style="font-size:0.85rem;color:var(--text);margin-bottom:20px;">
+      Clique no botão abaixo para baixar o pacote completo.
+      O link expira em 7 dias.
+    </p>
+    <a href="zip/NeoPack-PRO-v3.0.0.zip" class="btn btn-primary" id="downloadBtn" download>▸ BAIXAR NEOPACK</a>
+    <div style="margin-top:16px;font-size:0.75rem;color:rgba(255,255,255,0.3);">
+      ⚡ Link pessoal e intransferível
+    </div>
+  </div>
+
+  <a href="index.html" class="btn btn-outline" style="width:100%;">← VOLTAR AO SITE</a>
+  <p style="margin-top:24px;font-size:0.7rem;color:rgba(255,255,255,0.2);">
+    © 2026 NeoPack — Se tiver dúvidas, responda ao e-mail de confirmação.
+  </p>
+</div>
+
+<div class="container invalid" id="invalidPage" style="display:none;">
+  <div class="icon">🔒</div>
+  <h1>ACESSO NEGADO</h1>
+  <p class="subtitle" style="color:#ff4646;">
+    Você precisa realizar a compra antes de acessar o download.
+  </p>
+  <a href="checkout.html" class="btn btn-primary">▸ IR PARA CHECKOUT</a>
+  <br><br>
+  <a href="index.html" class="btn btn-outline">← VOLTAR AO SITE</a>
+</div>
+
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session');
+  const customers = JSON.parse(localStorage.getItem('neopack_customers') || '[]');
+  const session = JSON.parse(sessionStorage.getItem('neopack_session') || 'null');
+
+  let customer = null;
+  if (sessionId) {
+    customer = customers.find(c => c.id === sessionId);
+  }
+  if (!customer && session) {
+    customer = session;
+  }
+
+  if (customer) {
+    document.getElementById('resumoNome').textContent = customer.nome;
+    document.getElementById('resumoEmail').textContent = customer.email;
+    document.getElementById('resumoPlano').textContent = customer.plano.toUpperCase();
+    document.getElementById('resumoData').textContent = new Date(customer.data).toLocaleString('pt-BR');
+    document.getElementById('resumoID').textContent = customer.id;
+    document.getElementById('resumoAssinatura').textContent = customer.assinatura;
+
+    // Update download link based on plan
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (customer.plano === 'enterprise') {
+      downloadBtn.href = 'zip/NeoPack-ENTERPRISE-v3.0.0.zip';
+      downloadBtn.textContent = '▸ BAIXAR NEOPACK ENTERPRISE';
+    } else {
+      downloadBtn.href = 'zip/NeoPack-PRO-v3.0.0.zip';
+      downloadBtn.textContent = '▸ BAIXAR NEOPACK PRO';
+    }
+
+    // Mark as paid
+    if (sessionId) {
+      const idx = customers.findIndex(c => c.id === sessionId);
+      if (idx >= 0) {
+        customers[idx].pago = true;
+        customers[idx].dataDownload = new Date().toISOString();
+        localStorage.setItem('neopack_customers', JSON.stringify(customers));
+      }
+    }
+
+    document.getElementById('validPage').style.display = 'block';
+    document.getElementById('invalidPage').style.display = 'none';
+  } else {
+    document.getElementById('validPage').style.display = 'none';
+    document.getElementById('invalidPage').style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
