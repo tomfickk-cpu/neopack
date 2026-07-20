@@ -107,6 +107,15 @@ nav a::after {
   transition: width 0.3s;
 }
 nav a:hover::after { width: 100%; }
+.admin-link { opacity: 0.4; font-size: 0.75rem; }
+.admin-link:hover { opacity: 1; }
+
+.menu-toggle {
+  display: none;
+  background: none; border: none; color: var(--matrix-green);
+  font-size: 1.5rem; cursor: pointer; padding: 4px 8px;
+  font-family: 'JetBrains Mono', monospace;
+}
 
 /* HERO */
 .hero {
@@ -580,16 +589,36 @@ footer .logo { margin-bottom: 12px; display: block; }
   .platforms-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
   .pricing-card.featured { transform: none; }
+  .agent-grid { grid-template-columns: repeat(2,1fr) !important; }
+  #agentsCard { grid-column: span 2 !important; }
 }
 
 @media (max-width: 768px) {
   .hero-grid { grid-template-columns: 1fr; }
   .hero-content h1 { font-size: 2.2rem; }
+  .hero-sub { max-width: 100%; }
   .comparison-grid { grid-template-columns: 1fr; }
   .features-grid, .platforms-grid { grid-template-columns: 1fr; }
-  nav a { margin-left: 16px; font-size: 0.75rem; }
   .pricing-grid { max-width: 100%; }
   .cta-box { padding: 32px 24px; }
+  .agent-grid { grid-template-columns: repeat(2,1fr) !important; }
+  #agentsCard { grid-column: span 1 !important; }
+  .col-box { padding: 24px; }
+
+  .menu-toggle { display: block; }
+  nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10,10,10,0.98); border-bottom: 1px solid rgba(0,255,65,0.1); padding: 16px 24px; }
+  nav.open { display: flex; }
+  nav a { margin: 8px 0; font-size: 0.9rem; padding: 8px 0; }
+  nav a::after { display: none; }
+  header .container { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+  .agent-grid { grid-template-columns: 1fr 1fr !important; }
+  .hero-content h1 { font-size: 1.8rem; }
+  .platforms-grid { grid-template-columns: 1fr; }
+  .pricing-card { padding: 24px 16px; }
+  .terminal { font-size: 0.65rem; padding: 16px; }
 }
 </style>
 </head>
@@ -601,11 +630,13 @@ footer .logo { margin-bottom: 12px; display: block; }
 <header>
   <div class="container">
     <div class="logo">NEO<span>PACK</span></div>
-    <nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+    <nav id="nav">
       <a href="#features">Recursos</a>
       <a href="#platforms">Plataformas</a>
       <a href="#pricing">Planos</a>
       <a href="#faq">FAQ</a>
+      <a href="admin.html" class="admin-link">Admin</a>
     </nav>
   </div>
 </header>
@@ -631,7 +662,7 @@ footer .logo { margin-bottom: 12px; display: block; }
            Um clique. 7 plataformas. Performance máxima.
         </p>
         <div class="hero-actions">
-          <a href="#pricing" class="btn btn-primary">▸ ADQUIRIR</a>
+          <a href="checkout.html" class="btn btn-primary">▸ ADQUIRIR</a>
           <a href="#features" class="btn btn-outline">▸ EXPLORAR</a>
         </div>
       </div>
@@ -669,10 +700,10 @@ footer .logo { margin-bottom: 12px; display: block; }
       <p>Tudo que você precisa para desenvolvimento AI máximo</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card" style="grid-column: span 3;">
+      <div class="feature-card" style="grid-column: span 3;" id="agentsCard">
         <div class="feature-icon">🧠</div>
         <h3>48 AGENTES ESPECIALISTAS</h3>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;font-size:0.7rem;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;font-size:0.7rem;" class="agent-grid">
           <div><strong style="color:var(--matrix-green);">🧠 CORE</strong><br>explore · build-assistant · code-review · general · customize-opencode</div>
           <div><strong style="color:var(--matrix-green);">🌐 WEB</strong><br>web-dev · seo-qa · content-mapper · image-processor</div>
           <div><strong style="color:var(--matrix-green);">📊 DADOS</strong><br>data-pipeline · db-agent · pdf-processor</div>
@@ -991,7 +1022,7 @@ footer .logo { margin-bottom: 12px; display: block; }
           <li>Atualizações por 3 meses</li>
           <li>1 desenvolvedor · 3 máquinas</li>
         </ul>
-        <a href="zip/NeoPack-PRO-v3.0.0.zip" class="btn btn-primary" style="width:100%;justify-content:center;" download>▸ BAIXAR PRO</a>
+        <a href="checkout.html?plano=pro" class="btn btn-primary" style="width:100%;justify-content:center;">▸ COMPRAR PRO</a>
       </div>
       <div class="pricing-card">
         <h3>ENTERPRISE</h3>
@@ -1009,7 +1040,7 @@ footer .logo { margin-bottom: 12px; display: block; }
           <li>Versão empresa (devs ilimitados)</li>
           <li>Multi-projeto automático</li>
         </ul>
-        <a href="zip/NeoPack-ENTERPRISE-v3.0.0.zip" class="btn btn-outline" style="width:100%;justify-content:center;" download>▸ BAIXAR ENTERPRISE</a>
+        <a href="checkout.html?plano=enterprise" class="btn btn-outline" style="width:100%;justify-content:center;">▸ COMPRAR ENTERPRISE</a>
       </div>
     </div>
   </div>
@@ -1086,8 +1117,8 @@ footer .logo { margin-bottom: 12px; display: block; }
     <div class="cta-box">
       <h2>PRONTO PARA <span class="green">EVOLUIR</span>?</h2>
       <p>Configure seu exército de agentes AI em 1 clique. 7 plataformas. Performance máxima. Crédito mínimo.</p>
-        <a href="zip/NeoPack-PRO-v3.0.0.zip" class="btn btn-primary" download>▸ BAIXAR PRO v3.0.0</a>
-        <a href="zip/NeoPack-ENTERPRISE-v3.0.0.zip" class="btn btn-outline" download style="margin-left:12px;">▸ BAIXAR ENTERPRISE</a>
+        <a href="checkout.html?plano=pro" class="btn btn-primary">▸ COMPRAR PRO</a>
+        <a href="checkout.html?plano=enterprise" class="btn btn-outline" style="margin-left:12px;">▸ COMPRAR ENTERPRISE</a>
     </div>
   </div>
 </section>
@@ -1096,7 +1127,7 @@ footer .logo { margin-bottom: 12px; display: block; }
   <div class="container">
     <div class="logo">NEO<span>PACK</span></div>
     <p>© 2026 NeoPack. Zero dependências. Máximo desempenho.</p>
-    <p style="margin-top:8px;font-size:0.7rem;color:rgba(255,255,255,0.2);">Consulte LICENSE.txt para termos de uso.</p>
+    <p style="margin-top:8px;font-size:0.7rem;color:rgba(255,255,255,0.2);">Consulte <a href="termos.html" style="color:rgba(255,255,255,0.3);">termos de uso</a> · <a href="admin.html" style="color:rgba(255,255,255,0.2);">Admin</a></p>
   </div>
 </footer>
 
@@ -1135,6 +1166,14 @@ setInterval(drawMatrix, 40);
 window.addEventListener('resize', () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+});
+
+// MENU TOGGLE (mobile)
+document.getElementById('menuToggle').addEventListener('click', function() {
+  document.getElementById('nav').classList.toggle('open');
+});
+document.querySelectorAll('#nav a').forEach(link => {
+  link.addEventListener('click', () => document.getElementById('nav').classList.remove('open'));
 });
 
 // FAQ ACCORDION
