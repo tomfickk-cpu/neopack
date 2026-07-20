@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeoPack — Config AI Máxima</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --matrix-green: #00ff41;
+  --matrix-dim: #003b00;
+  --matrix-glow: rgba(0, 255, 65, 0.3);
+  --bg-dark: #0a0a0a;
+  --bg-card: #0d0d0d;
+  --text: #c0c0c0;
+  --text-bright: #e0e0e0;
+  --neon-cyan: #00f0ff;
+  --neon-purple: #b000ff;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+#matrix-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.content { position: relative; z-index: 1; }
+
+.scanline {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* HEADER */
+header {
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(20px);
+  z-index: 10;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--matrix-green);
+  text-shadow: 0 0 20px var(--matrix-glow);
+}
+
+.logo span { color: var(--text-bright); }
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin-left: 32px;
+  font-size: 0.85rem;
+  transition: color 0.3s;
+  position: relative;
+}
+nav a:hover { color: var(--matrix-green); }
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--matrix-green);
+  transition: width 0.3s;
+}
+nav a:hover::after { width: 100%; }
+
+/* HERO */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 80px 0;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+
+.green { color: var(--matrix-green); text-shadow: 0 0 30px var(--matrix-glow); }
+.white { color: var(--text-bright); }
+.cyan { color: var(--neon-cyan); }
+.purple { color: var(--neon-purple); }
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 32px;
+  max-width: 500px;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--matrix-green);
+  color: var(--bg-dark);
+  box-shadow: 0 0 30px var(--matrix-glow);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 60px var(--matrix-glow);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--matrix-green);
+  border: 1px solid var(--matrix-green);
+}
+.btn-outline:hover {
+  background: rgba(0, 255, 65, 0.1);
+  box-shadow: 0 0 20px var(--matrix-glow);
+}
+
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.terminal {
+  background: rgba(0, 20, 0, 0.8);
+  border: 1px solid var(--matrix-green);
+  border-radius: 8px;
+  padding: 24px;
+  width: 100%;
+  box-shadow: 0 0 40px var(--matrix-glow);
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.terminal-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.terminal-body { color: var(--matrix-green); }
+.terminal-body .prompt { color: var(--neon-cyan); }
+.terminal-body .output { color: var(--text); }
+.terminal-body .highlight { color: var(--matrix-green); font-weight: 700; }
+.terminal-body .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--matrix-green);
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* SECTION TITLES */
+.section-title {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-title h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.2rem;
+  color: var(--text-bright);
+  margin-bottom: 12px;
+}
+
+.section-title .line {
+  width: 60px;
+  height: 2px;
+  background: var(--matrix-green);
+  margin: 0 auto;
+  box-shadow: 0 0 10px var(--matrix-glow);
+}
+
+.section-title p {
+  color: var(--text);
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+/* FEATURES */
+.features {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 255, 65, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--matrix-green), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feature-card:hover::before { opacity: 1; }
+.feature-card:hover {
+  border-color: rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.05);
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.feature-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  color: var(--matrix-green);
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* PLATFORMS */
+.platforms {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.platform-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 255, 65, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: default;
+}
+
+.platform-card:hover {
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+  transform: translateY(-4px);
+}
+
+.platform-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+.platform-card h4 { color: var(--matrix-green); font-size: 0.95rem; margin-bottom: 8px; font-family: 'Orbitron', monospace; }
+.platform-card p { font-size: 0.75rem; color: var(--text); }
+
+/* COMPARISON */
+.comparison {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.col-box {
+  border: 1px solid rgba(0, 255, 65, 0.1);
+  border-radius: 8px;
+  padding: 40px;
+}
+
+.col-box.without { border-color: rgba(255, 50, 50, 0.2); }
+.col-box.with { border-color: rgba(0, 255, 65, 0.3); }
+
+.col-box h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+}
+
+.col-box.without h3 { color: #ff4646; }
+.col-box.with h3 { color: var(--matrix-green); }
+
+.col-box ul { list-style: none; }
+.col-box ul li {
+  padding: 8px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.col-box.without ul li::before { content: '✗'; color: #ff4646; }
+.col-box.with ul li::before { content: '✓'; color: var(--matrix-green); font-weight: 700; }
+
+/* PRICING */
+.pricing {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 255, 65, 0.1);
+  border-radius: 8px;
+  padding: 40px 32px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.pricing-card.featured {
+  border-color: var(--matrix-green);
+  box-shadow: 0 0 30px var(--matrix-glow);
+  transform: scale(1.05);
+}
+
+.pricing-card.featured::before {
+  content: 'RECOMENDADO';
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--matrix-green);
+  color: var(--bg-dark);
+  padding: 4px 16px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 4px;
+  font-family: 'Orbitron', monospace;
+}
+
+.pricing-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  color: var(--matrix-green);
+  margin-bottom: 8px;
+}
+
+.pricing-card .sub {
+  font-size: 0.8rem;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.pricing-card .price {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+
+.pricing-card .period {
+  font-size: 0.75rem;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.pricing-card ul {
+  list-style: none;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.pricing-card ul li {
+  padding: 6px 0;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pricing-card ul li::before { content: '▸'; color: var(--matrix-green); }
+
+/* FAQ */
+.faq {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+}
+
+.faq-list { max-width: 700px; margin: 0 auto; }
+
+.faq-item {
+  border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+  padding: 20px 0;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  color: var(--text-bright);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.faq-question:hover { color: var(--matrix-green); }
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s, padding 0.3s;
+  color: var(--text);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  padding-top: 12px;
+}
+
+.faq-toggle {
+  font-size: 1.2rem;
+  transition: transform 0.3s;
+}
+
+.faq-item.active .faq-toggle { transform: rotate(45deg); }
+
+/* CTA */
+.cta {
+  padding: 100px 0;
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+  text-align: center;
+}
+
+.cta-box {
+  background: rgba(0, 255, 65, 0.03);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 12px;
+  padding: 60px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-box h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem;
+  color: var(--text-bright);
+  margin-bottom: 16px;
+}
+
+.cta-box p {
+  color: var(--text);
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+}
+
+.cta-box .btn { margin: 0 auto; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid rgba(0, 255, 65, 0.05);
+  padding: 40px 0;
+  text-align: center;
+}
+
+footer p {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+}
+
+footer .logo { margin-bottom: 12px; display: block; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+  .pricing-card.featured { transform: none; }
+}
+
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-content h1 { font-size: 2.2rem; }
+  .comparison-grid { grid-template-columns: 1fr; }
+  .features-grid, .platforms-grid { grid-template-columns: 1fr; }
+  nav a { margin-left: 16px; font-size: 0.75rem; }
+  .pricing-grid { max-width: 100%; }
+  .cta-box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+<div class="scanline"></div>
+
+<header>
+  <div class="container">
+    <div class="logo">NEO<span>PACK</span></div>
+    <nav>
+      <a href="#features">Recursos</a>
+      <a href="#platforms">Plataformas</a>
+      <a href="#pricing">Planos</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="content">
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,65,0.08);border:1px solid rgba(0,255,65,0.2);border-radius:4px;padding:8px 16px;margin-bottom:20px;font-size:0.8rem;color:var(--matrix-green);">
+          <span style="font-size:1.1rem;">💰</span>
+          <span><strong>60% de economia em créditos</strong> — modelo gratuito como padrão, LSPs e formatters locais (custo zero), agentes usam grep/glob em vez de API para análise de código</span>
+        </div>
+        <h1>
+          <span class="green">CONFIGURE</span><br>
+          <span class="white">SEU</span> <span class="green">EXÉRCITO</span><br>
+          <span class="white">DE</span> <span class="cyan">AGENTES AI</span>
+        </h1>
+        <p class="hero-sub">
+          Setup profissional com 36 agentes, 8 MCPs, 7 LSPs, 3 formatters.
+          GPU/CUDA · Jetson · TAO · Brev · Portfolio · CuTile · Triton.
+          Um clique. 7 plataformas. Performance máxima.
+        </p>
+        <div class="hero-actions">
+          <a href="#pricing" class="btn btn-primary">▸ ADQUIRIR</a>
+          <a href="#features" class="btn btn-outline">▸ EXPLORAR</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="terminal-body">
+            <span class="prompt">root@neo:~$</span> ./setup --all<br>
+            <span class="output">⚙ Inicializando agentes...</span><br>
+            <span class="output">✓ 36 agentes carregados</span><br>
+            <span class="output">  ├ GPU/CUDA · cuTile · Triton</span><br>
+            <span class="output">  ├ Jetson · TAO · Brev · K8s</span><br>
+            <span class="output">  └ Portfolio · BSP · NeMo-RL</span><br>
+            <span class="output">✓ 8 MCP servers ativos</span><br>
+            <span class="output">✓ 7 LSPs configurados</span><br>
+            <span class="output">✓ 3 formatters prontos</span><br>
+            <span class="prompt">root@neo:~$</span> <span class="highlight">SISTEMA OPERACIONAL</span><span class="cursor"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ CAPACIDADES</h2>
+      <div class="line"></div>
+      <p>Tudo que você precisa para desenvolvimento AI máximo</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>36 AGENTES</h3>
+        <p>GPU/CUDA (cuDF, cuOpt, CUDA-Q, cuPyNumeric, cuTile), Jetson (DRAM, clocks, MGBE, headless), TAO/Brev/K8s, Portfolio (Mean-CVaR), BSP, Triton, Julia + web, imagens, PDFs, DB, SEO, code review, automação.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>8 MCP SERVERS</h3>
+        <p>Puppeteer, Playwright, GitHub, Brave Search, SQLite, Memória persistente, Filesystem e raciocínio sequencial.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>7 LSPS + 3 FORMATTERS</h3>
+        <p>Inteligência de código para Go, TS, HTML, CSS, JSON, Python, Markdown. Formatação automática com Prettier, Ruff e Gofmt.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>SETUP 1 CLIQUE</h3>
+        <p>PowerShell automático. Instala Node.js, Python, npm, pip, MCPs, plugins, configura pastas e deixa tudo pronto.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>MULTI-PLATAFORMA</h3>
+        <p>OpenCode, VS Code + Continue, VS Code + Copilot, Cursor, Claude Desktop, Windsurf. Escolha sua ferramenta.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>ECONOMIA DE CRÉDITOS</h3>
+        <p>Modelo DeepSeek V4 Flash gratuito como padrão. Ferramentas locais (grep, glob, LSPs) com custo zero. Go premium só quando explicitamente solicitado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="platforms" id="platforms">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ PLATAFORMAS</h2>
+      <div class="line"></div>
+      <p>Um pacote. Sete plataformas suportadas.</p>
+    </div>
+    <div class="platforms-grid">
+      <div class="platform-card">
+        <div class="icon">🔳</div>
+        <h4>OPENCODE</h4>
+        <p>CLI + Desktop nativo. Setup completo com todos agentes, MCPs e plugins.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">◼</div>
+        <h4>VS CODE + CONTINUE</h4>
+        <p>Extensão open-source. MCPs e LSPs configurados para AI coding gratuito.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">◆</div>
+        <h4>VS CODE + COPILOT</h4>
+        <p>GitHub Copilot com autocomplete inline + chat + infraestrutura completa.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">⬡</div>
+        <h4>CURSOR</h4>
+        <p>Editor AI-native. Regras, MCPs e prompts dos agentes pré-configurados.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">◈</div>
+        <h4>CLAUDE DESKTOP</h4>
+        <p>App Anthropic com todos MCPs ativados via claude_desktop_config.json.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">◇</div>
+        <h4>WINDSURF</h4>
+        <p>IDE Codeium com MCPs, regras e infraestrutura de LSPs.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">⬚</div>
+        <h4>GENERIC MCP</h4>
+        <p>Para qualquer ferramenta MCP-compatível. Gera config universal.</p>
+      </div>
+      <div class="platform-card">
+        <div class="icon">⊞</div>
+        <h4>TODAS + SUPORTE</h4>
+        <p>Setup personalizado + suporte para integrar em qualquer ambiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="comparison">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ ANTES VS DEPOIS</h2>
+      <div class="line"></div>
+      <p>O que muda quando você usa o NeoPack</p>
+    </div>
+    <div class="comparison-grid">
+      <div class="col-box without">
+        <h3>❌ SEM NEOPACK</h3>
+        <ul>
+          <li>Horas configurando ferramentas manualmente</li>
+          <li>Cada plataforma precisa de setup diferente</li>
+          <li>MCPs instalados um por um</li>
+          <li>Sem agentes especializados</li>
+          <li>Sem economia de créditos</li>
+          <li>Configuração espalhada em vídeos e tutoriais</li>
+          <li>Sem padronização entre máquinas</li>
+        </ul>
+      </div>
+      <div class="col-box with">
+        <h3>✅ COM NEOPACK</h3>
+        <ul>
+          <li>Setup completo em 1 clique</li>
+          <li>7 plataformas num único pacote</li>
+          <li>8 MCPs pré-configurados</li>
+          <li>36 agentes especialistas prontos</li>
+          <li>GPU/CUDA, Jetson, TAO, Brev, K8s, Portfolio</li>
+          <li>Modelo gratuito como padrão — economia máxima</li>
+          <li>Tudo documentado em PDF + scripts</li>
+          <li>Mesma configuração em qualquer PC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ PLANOS</h2>
+      <div class="line"></div>
+      <p>Escolha o nível de suporte ideal para você</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>ESSENTIAL</h3>
+        <div class="sub">Faça você mesmo</div>
+        <div class="price">GRÁTIS</div>
+        <div class="period">Código aberto</div>
+        <ul>
+          <li>Acesso ao repositório GitHub</li>
+          <li>Configs base para OpenCode</li>
+          <li>Documentação completa</li>
+          <li>Setup manual via tutorial</li>
+          <li>Sem suporte individual</li>
+        </ul>
+        <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;">▸ ACESSAR</a>
+      </div>
+      <div class="pricing-card featured">
+        <h3>PRO</h3>
+        <div class="sub">Setup na hora</div>
+        <div class="price">R$47</div>
+        <div class="period">Única parcela</div>
+        <ul>
+          <li>ZIP completo com 7 plataformas</li>
+          <li>Scripts setup.ps1 automáticos</li>
+          <li>36 agentes especialistas</li>
+          <li>GPU/CUDA · Jetson · TAO · Brev · K8s · Portfolio</li>
+          <li>8 MCPs pré-configurados</li>
+          <li>7 LSPs + 3 formatters</li>
+          <li>Guia PDF passo a passo</li>
+          <li>Suporte via e-mail 7 dias</li>
+          <li>Atualizações por 3 meses</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;">▸ ADQUIRIR</a>
+      </div>
+      <div class="pricing-card">
+        <h3>ENTERPRISE</h3>
+        <div class="sub">Sob medida</div>
+        <div class="price">R$147</div>
+        <div class="period">Única parcela</div>
+        <ul>
+          <li>Tudo do plano PRO</li>
+          <li>Setup remoto com especialista</li>
+          <li>Config personalizada para seu projeto</li>
+          <li>Agentes customizados</li>
+          <li>Suporte VIP 30 dias</li>
+          <li>Atualizações vitalícias</li>
+          <li>Versão empresa (vários devs)</li>
+        </ul>
+        <a href="#" class="btn btn-outline" style="width:100%;justify-content:center;">▸ CONTATAR</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ FAQ</h2>
+      <div class="line"></div>
+      <p>Perguntas frequentes</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item active">
+        <button class="faq-question">
+          O que vem no pacote?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          70+ arquivos: 36 agentes especialistas (GPU/CUDA, Jetson, TAO, Brev, K8s, Portfolio, BSP), 8 MCPs, 7 LSPs, 3 formatters, configs globais, scripts de setup para 7 plataformas, Dockerfile, Dev Container, e CATÁLOGO completo.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Funciona em qualquer Windows?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Sim. Windows 10/11. Requer Node.js 18+, Python 3.10+, Go 1.21+ e Git 2.30+. O script detecta e avisa se faltar algo.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Preciso saber programar para usar?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Não. O setup.ps1 é automático. Só executar como Administrador e colar as chaves de API. O guia PDF explica cada passo.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Quanto vou economizar em créditos AI?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Cerca de 60% dos créditos. Isso porque o modelo gratuito é o padrão, LSPs e formatters são locais (custo zero), e os agentes usam grep/glob em vez de API para análise de código.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          Posso usar em múltiplos PCs?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Sim. O pacote é seu. Pode instalar em quantos computadores quiser. O plano Enterprise inclui setup remoto personalizado para cada máquina.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          E se eu tiver dúvidas?
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer">
+          Plano PRO: suporte por e-mail por 7 dias. Plano Enterprise: suporte VIP por 30 dias + setup remoto com especialista.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <h2>PRONTO PARA <span class="green">EVOLUIR</span>?</h2>
+      <p>Configure seu exército de agentes AI em 1 clique. 7 plataformas. Performance máxima. Crédito mínimo.</p>
+        <a href="#pricing" class="btn btn-primary">▸ QUERO MEU NEO PACK</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="logo">NEO<span>PACK</span></div>
+    <p>© 2026 NeoPack. Zero dependências. Máximo desempenho.</p>
+    <p style="margin-top:8px;font-size:0.7rem;color:rgba(255,255,255,0.2);">Consulte LICENSE.txt para termos de uso.</p>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// MATRIX RAIN
+const canvas = document.getElementById('matrix-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>/{}[]|&^%$#@!';
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#00ff41';
+  ctx.font = `${fontSize}px monospace`;
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillStyle = Math.random() > 0.98 ? '#00ff41' : 'rgba(0, 255, 65, 0.5)';
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(drawMatrix, 40);
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+// FAQ ACCORDION
+document.querySelectorAll('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+    if (!isActive) item.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
