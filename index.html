@@ -668,10 +668,20 @@ footer .logo { margin-bottom: 12px; display: block; }
       <p>Tudo que você precisa para desenvolvimento AI máximo</p>
     </div>
     <div class="features-grid">
-      <div class="feature-card">
+      <div class="feature-card" style="grid-column: span 3;">
         <div class="feature-icon">🧠</div>
-        <h3>36 AGENTES</h3>
-        <p>GPU/CUDA (cuDF, cuOpt, CUDA-Q, cuPyNumeric, cuTile), Jetson (DRAM, clocks, MGBE, headless), TAO/Brev/K8s, Portfolio (Mean-CVaR), BSP, Triton, Julia + web, imagens, PDFs, DB, SEO, code review, automação.</p>
+        <h3>36 AGENTES ESPECIALISTAS</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;font-size:0.75rem;">
+          <div><strong style="color:var(--matrix-green);">🧠 CORE</strong><br>explore · build-assistant · code-review · general · customize-opencode</div>
+          <div><strong style="color:var(--matrix-green);">🌐 WEB</strong><br>web-dev · seo-qa · content-mapper · image-processor</div>
+          <div><strong style="color:var(--matrix-green);">📊 DADOS</strong><br>data-pipeline · db-agent (SQLite) · pdf-processor</div>
+          <div><strong style="color:var(--matrix-green);">⚡ GPU/CUDA</strong><br>cudf-agent · cuopt-agent · cuda-q-agent · cupynumeric-agent</div>
+          <div><strong style="color:var(--matrix-green);">🔲 CUTILE</strong><br>cutile-agent · cutile-optimizer · cutile-autotune · cutile-to-triton · cutile-py2jl · cutile-pareto</div>
+          <div><strong style="color:var(--matrix-green);">🤖 ML/DL</strong><br>tilegym-hf · portfolio-optimizer · optimization-concepts</div>
+          <div><strong style="color:var(--matrix-green);">📟 JETSON/BSP</strong><br>jetson-dram-reclaim · jetson-headless-memory · jetson-mgbe-qsfp · jetson-clock-lock · bsp-promote</div>
+          <div><strong style="color:var(--matrix-green);">🎯 TAO/NVIDIA</strong><br>tao-gpu-host · tao-k8s · brev-tao · brev-nemo-rl</div>
+          <div><strong style="color:var(--matrix-green);">🔧 DEVOPS</strong><br>go-dev · script-automation</div>
+        </div>
       </div>
       <div class="feature-card">
         <div class="feature-icon">🔌</div>
@@ -780,8 +790,11 @@ footer .logo { margin-bottom: 12px; display: block; }
           <li>Setup completo em 1 clique</li>
           <li>7 plataformas num único pacote</li>
           <li>8 MCPs pré-configurados</li>
-          <li>36 agentes especialistas prontos</li>
-          <li>GPU/CUDA, Jetson, TAO, Brev, K8s, Portfolio</li>
+          <li>36 agentes especialistas — 9 categorias</li>
+          <li>GPU/CUDA (cuDF, cuOpt, CUDA-Q, cuPyNumeric)</li>
+          <li>cuTile (kernel, optimizer, autotune, triton, julia, pareto)</li>
+          <li>Jetson (DRAM, headless, MGBE, clocks) + BSP</li>
+          <li>TAO (host, K8s, Brev, NeMo-RL) + Portfolio</li>
           <li>Modelo gratuito como padrão — economia máxima</li>
           <li>Tudo documentado em PDF + scripts</li>
           <li>Mesma configuração em qualquer PC</li>
@@ -865,7 +878,7 @@ footer .logo { margin-bottom: 12px; display: block; }
           <span class="faq-toggle">+</span>
         </button>
         <div class="faq-answer">
-          70+ arquivos: 36 agentes especialistas (GPU/CUDA, Jetson, TAO, Brev, K8s, Portfolio, BSP), 8 MCPs, 7 LSPs, 3 formatters, configs globais, scripts de setup para 7 plataformas, Dockerfile, Dev Container, e CATÁLOGO completo.
+          70+ arquivos: 36 agentes em 9 categorias — Core (explore, build-assistant, code-review, general, customize), Web (web-dev, seo-qa, content-mapper, image-processor), Dados (data-pipeline, db-agent, pdf-processor), GPU/CUDA (cudf-agent, cuopt-agent, cuda-q-agent, cupynumeric-agent), cuTile (kernel, optimizer, autotune, to-triton, py2jl, pareto), ML/DL (tilegym-hf, portfolio-optimizer, optimization-concepts), Jetson/BSP (dram-reclaim, headless-memory, mgbe-qsfp, clock-lock, bsp-promote), TAO/NVIDIA (tao-gpu-host, tao-k8s, brev-tao, brev-nemo-rl), DevOps (go-dev, script-automation). + 8 MCPs, 7 LSPs, 3 formatters, scripts 7 plataformas, Dockerfile, Dev Container.
         </div>
       </div>
       <div class="faq-item">
