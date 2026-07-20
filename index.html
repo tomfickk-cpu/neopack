@@ -701,7 +701,7 @@ footer .logo { margin-bottom: 12px; display: block; }
           <div class="terminal-body">
             <span class="prompt">root@neo:~$</span> ./setup --all<br>
             <span class="output">⚙ Inicializando agentes...</span><br>
-            <span class="output">✓           163 agentes carregados</span><br>
+            <span class="output">✓           169 agentes carregados (ESSENCIAL: 33 | PRO: 92 | ENTERPRISE: 169)</span><br>
             <span class="output">  ├ Core · Web · Dados · GPU· Performance</span><br>
             <span class="output">  ├ cuTile · ML/DL · Jetson</span><br>
             <span class="output">  ├ Rust · Mobile · Docker· SRE· DevOps</span><br>
@@ -727,7 +727,7 @@ footer .logo { margin-bottom: 12px; display: block; }
     <div class="features-grid">
       <div class="feature-card" style="grid-column: span 3;" id="agentsCard">
         <div class="feature-icon">🧠</div>
-        <h3>163 AGENTES (3 TIERS + VOZ)</h3>
+        <h3>169 AGENTES (3 TIERS + VOZ)</h3>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;font-size:0.7rem;" class="agent-grid">
           <div><strong style="color:var(--matrix-green);">🧠 CORE</strong><br>explore · build-assistant · code-review · general · customize-opencode</div>
           <div><strong style="color:var(--matrix-green);">🌐 WEB</strong><br>web-dev · seo-qa · content-mapper · image-processor</div>
@@ -863,9 +863,9 @@ footer .logo { margin-bottom: 12px; display: block; }
 <section class="agents" id="agents" style="padding:100px 0;border-top:1px solid rgba(0,255,65,0.05);">
   <div class="container">
     <div class="section-title">
-      <h2>▸ TODOS OS 163 AGENTES</h2>
+        <h2>▸ TODOS OS 169 AGENTES</h2>
       <div class="line"></div>
-      <p>30+ categorias. Especialistas em cada domínio..</p>
+      <p>30+ categorias. Especialistas em cada domínio.</p>
     </div>
     <div style="overflow-x:auto;">
       <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
@@ -997,12 +997,17 @@ footer .logo { margin-bottom: 12px; display: block; }
             <td style="padding:14px 16px;color:var(--text);">voice-input (whisper STT offline), @renjfk/opencode-voice, mcp-listen, voice.ps1</td>
             <td style="padding:14px 16px;text-align:center;color:var(--matrix-green);font-weight:700;">4</td>
           </tr>
+          <tr style="border-bottom:1px solid rgba(0,255,65,0.1);background:rgba(255,215,0,0.05);">
+            <td style="padding:14px 16px;font-size:1.2rem;">⭐ Enterprise</td>
+            <td style="padding:14px 16px;color:var(--text);">agent-builder, agent-analytics, white-label, multi-team, neopack-api, code-trainer, security-compliance</td>
+            <td style="padding:14px 16px;text-align:center;color:var(--neon-cyan);font-weight:700;">7</td>
+          </tr>
         </tbody>
         <tfoot>
           <tr style="border-top:2px solid var(--matrix-green);">
             <td style="padding:14px 16px;font-family:'Orbitron',monospace;color:var(--matrix-green);font-weight:700;">TOTAL</td>
             <td style="padding:14px 16px;"></td>
-            <td style="padding:14px 16px;text-align:center;font-family:'Orbitron',monospace;color:var(--matrix-green);font-size:1.3rem;font-weight:900;">163</td>
+            <td style="padding:14px 16px;text-align:center;font-family:'Orbitron',monospace;color:var(--matrix-green);font-size:1.3rem;font-weight:900;">169</td>
           </tr>
         </tfoot>
       </table>
@@ -1088,7 +1093,7 @@ footer .logo { margin-bottom: 12px; display: block; }
           <li>Setup completo em 1 clique</li>
           <li>7 plataformas num único pacote</li>
           <li>14 MCPs pré-configurados</li>
-          <li>163 AGENTES (3 TIERS + VOZ) — 30+ categorias</li>
+          <li>169 AGENTES (3 TIERS + VOZ) — 30+ categorias</li>
           <li>GPU/CUDA + cuTile + ML/DL + Jetson + TAO</li>
           <li>Rust + Mobile + Docker/K8s + Terraform</li>
           <li>App Dev (iOS, Android, RN, Flutter, UI/UX, API, Testing, Store)</li>
@@ -1156,10 +1161,12 @@ footer .logo { margin-bottom: 12px; display: block; }
         </div>
         <div class="period">Única parcela · Economia de <strong style="color:var(--matrix-green);">R$50</strong></div>
         <ul>
-          <li>163 AGENTES COMPLETOS (PRO + EXCLUSIVOS)</li>
+          <li>169 AGENTES COMPLETOS (PRO + 7 EXCLUSIVOS ⭐)</li>
           <li>GPU/CUDA · CuTile · Jetson · TAO · App Dev · Web3</li>
           <li>14 MCPs + 7 LSPs + 3 formatters</li>
           <li>🎤 Voz + Todos os recursos do PRO</li>
+          <li>⭐ Construtor visual de agentes + Analytics + White-label</li>
+          <li>⭐ Multi-times + API + Code Trainer + Compliance</li>
           <li>Setup remoto com especialista</li>
           <li>Config personalizada para seu projeto</li>
           <li>Branding da sua empresa</li>
@@ -1170,13 +1177,13 @@ footer .logo { margin-bottom: 12px; display: block; }
         </ul>
         <div class="extra-benefits">
           <ul>
-            <li style="color:var(--neon-cyan);font-weight:600;">Construtor visual de agentes — crie agentes sem editar arquivos</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">Dashboard de analytics — veja quais agentes sua equipe mais usa</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">White-label completo — rebrandeie NeoPack como seu produto</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">Multi-times — equipes separadas com permissões</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">API exclusiva — acesse recursos do NeoPack via API</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">Treinamento dos agentes na sua base de código</li>
-            <li style="color:var(--neon-cyan);font-weight:600;">Relatório de segurança e compliance</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ Construtor visual de agentes — crie agentes sem editar arquivos</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ Dashboard de analytics — veja quais agentes sua equipe mais usa</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ White-label completo — rebrandeie NeoPack como seu produto</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ Multi-times — equipes separadas com permissões</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ API exclusiva — acesse recursos do NeoPack via API</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ Treinamento dos agentes na sua base de código</li>
+            <li style="color:var(--neon-cyan);font-weight:600;">⭐ Relatório de segurança e compliance</li>
             <li style="color:var(--neon-cyan);font-weight:600;">Canal privado Telegram/Discord direto com equipe</li>
             <li>Acesso antecipado beta a novos agentes e MCPs</li>
             <li>Prioridade máxima em atualizações e lançamentos</li>
