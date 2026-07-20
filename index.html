@@ -605,6 +605,8 @@ footer .logo { margin-bottom: 12px; display: block; }
   #agentsCard { grid-column: span 1 !important; }
   .col-box { padding: 24px; }
 
+  .onecmd-grid { grid-template-columns: 1fr 1fr !important; }
+  .steps-grid { grid-template-columns: 1fr !important; }
   .menu-toggle { display: block; }
   nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(10,10,10,0.98); border-bottom: 1px solid rgba(0,255,65,0.1); padding: 16px 24px; }
   nav.open { display: flex; }
@@ -615,6 +617,7 @@ footer .logo { margin-bottom: 12px; display: block; }
 
 @media (max-width: 480px) {
   .agent-grid { grid-template-columns: 1fr 1fr !important; }
+  .onecmd-grid { grid-template-columns: 1fr !important; }
   .hero-content h1 { font-size: 1.8rem; }
   .platforms-grid { grid-template-columns: 1fr; }
   .pricing-card { padding: 24px 16px; }
@@ -751,6 +754,76 @@ footer .logo { margin-bottom: 12px; display: block; }
         <div class="feature-icon">💰</div>
         <h3>ECONOMIA DE CRÉDITOS</h3>
         <p>Modelo DeepSeek V4 Flash gratuito como padrão. Ferramentas locais (grep, glob, LSPs) com custo zero. Go premium só quando explicitamente solicitado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UM COMANDO SO -->
+<section style="padding:80px 0;border-top:1px solid rgba(0,255,65,0.05);">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ <span class="green">1 COMANDO SÓ</span></h2>
+      <div class="line"></div>
+      <p>Setup completo. Um único comando. Tudo instalado.</p>
+    </div>
+    <div style="max-width:750px;margin:0 auto;">
+      <div style="background:rgba(0,20,0,0.6);border:1px solid var(--matrix-green);border-radius:8px;padding:32px;margin-bottom:32px;box-shadow:0 0 40px var(--matrix-glow);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <span style="font-size:1.5rem;">⚡</span>
+          <span style="font-family:'Orbitron',monospace;color:var(--matrix-green);font-size:1.1rem;">EXECUTE ISTO:</span>
+        </div>
+        <div style="background:var(--bg-dark);border:1px solid rgba(0,255,65,0.2);border-radius:6px;padding:20px;font-size:0.95rem;font-family:'JetBrains Mono',monospace;color:var(--matrix-green);overflow-x:auto;">
+          powershell -ExecutionPolicy Bypass -File setup.ps1
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;" class="onecmd-grid">
+          <div style="background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.1);border-radius:6px;padding:20px;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:8px;">🧠</div>
+            <div style="font-family:'Orbitron',monospace;font-size:0.9rem;color:var(--matrix-green);">48 AGENTES</div>
+            <div style="font-size:0.75rem;color:var(--text);margin-top:4px;">12 categorias especializadas</div>
+          </div>
+          <div style="background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.1);border-radius:6px;padding:20px;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:8px;">🔌</div>
+            <div style="font-family:'Orbitron',monospace;font-size:0.9rem;color:var(--matrix-green);">12 MCP SERVERS</div>
+            <div style="font-size:0.75rem;color:var(--text);margin-top:4px;">Puppeteer, GitHub, PostgreSQL, Redis...</div>
+          </div>
+          <div style="background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.1);border-radius:6px;padding:20px;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:8px;">⚡</div>
+            <div style="font-family:'Orbitron',monospace;font-size:0.9rem;color:var(--matrix-green);">7 LSPs + 3 FMT</div>
+            <div style="font-size:0.75rem;color:var(--text);margin-top:4px;">TS, HTML, CSS, Python, Go, Prettier, Ruff</div>
+          </div>
+          <div style="background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.1);border-radius:6px;padding:20px;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:8px;">📦</div>
+            <div style="font-family:'Orbitron',monospace;font-size:0.9rem;color:var(--matrix-green);">PROJETO PRONTO</div>
+            <div style="font-size:0.75rem;color:var(--text);margin-top:4px;">cd ~/NeoPack-PRO && opencode</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-card);border:1px solid rgba(0,255,65,0.1);border-radius:8px;padding:32px;">
+        <h3 style="font-family:'Orbitron',monospace;color:var(--text-bright);font-size:1rem;margin-bottom:20px;">📋 O CLIENTE SÓ PRECISA:</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;" class="steps-grid">
+          <div style="text-align:center;padding:20px;background:rgba(0,255,65,0.03);border-radius:6px;border:1px solid rgba(0,255,65,0.08);">
+            <div style="font-family:'Orbitron',monospace;font-size:1.5rem;color:var(--matrix-green);margin-bottom:8px;">1</div>
+            <div style="font-size:0.85rem;color:var(--text-bright);font-weight:600;">Baixar o ZIP</div>
+            <div style="font-size:0.7rem;color:var(--text);margin-top:4px;">Após pagamento</div>
+          </div>
+          <div style="text-align:center;padding:20px;background:rgba(0,255,65,0.03);border-radius:6px;border:1px solid rgba(0,255,65,0.08);">
+            <div style="font-family:'Orbitron',monospace;font-size:1.5rem;color:var(--matrix-green);margin-bottom:8px;">2</div>
+            <div style="font-size:0.85rem;color:var(--text-bright);font-weight:600;">Extrair</div>
+            <div style="font-size:0.7rem;color:var(--text);margin-top:4px;">Descompactar o pacote</div>
+          </div>
+          <div style="text-align:center;padding:20px;background:rgba(0,255,65,0.03);border-radius:6px;border:1px solid rgba(0,255,65,0.08);">
+            <div style="font-family:'Orbitron',monospace;font-size:1.5rem;color:var(--matrix-green);margin-bottom:8px;">3</div>
+            <div style="font-size:0.85rem;color:var(--text-bright);font-weight:600;">Executar 1 comando</div>
+            <div style="font-size:0.7rem;color:var(--text);margin-top:4px;">Setup automático</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.12);border-radius:6px;text-align:center;">
+          <span style="font-size:0.9rem;color:var(--matrix-green);">➜</span>
+          <span style="font-size:0.85rem;color:var(--text-bright);">cd ~/NeoPack-PRO && opencode</span>
+          <span style="font-size:0.75rem;color:var(--text);margin-left:8px;">— Pronto! 48 agentes operacionais</span>
+        </div>
       </div>
     </div>
   </div>
