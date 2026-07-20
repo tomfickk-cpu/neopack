@@ -134,7 +134,7 @@ h1 {
       <label>Plano selecionado</label>
       <select id="planoSelect">
         <option value="pro">NeoPack PRO — R$47 (1 dev, 3 máquinas)</option>
-        <option value="enterprise">NeoPack ENTERPRISE — R$147 (devs ilimitados)</option>
+        <option value="enterprise" selected>🔥 NeoPack ENTERPRISE — PROMOÇÃO R$97 (de R$147 por R$97)</option>
       </select>
     </div>
 
@@ -217,7 +217,7 @@ h1 {
 
   function updatePrice() {
     const val = planoSelect.value;
-    priceDisplay.textContent = val === 'enterprise' ? 'R$ 147' : 'R$ 47';
+    priceDisplay.innerHTML = val === 'enterprise' ? '<span style="text-decoration:line-through;font-size:1.2rem;color:rgba(255,255,255,0.3);">R$147</span> R$ 97' : 'R$ 47';
   }
   planoSelect.addEventListener('change', updatePrice);
   updatePrice();
@@ -247,7 +247,7 @@ h1 {
       whatsapp: document.getElementById('whatsapp').value.trim(),
       empresa: document.getElementById('empresa').value.trim(),
       plano: plan,
-      preco: plan === 'enterprise' ? 147 : 47,
+        preco: plan === 'enterprise' ? 97 : 47,
       data: new Date().toISOString(),
       pago: false,
       assinatura: nome.value.trim(),
