@@ -1109,6 +1109,35 @@ footer .logo { margin-bottom: 12px; display: block; }
   </div>
 </section>
 
+<section id="instalacao" style="padding:60px 0;border-top:1px solid rgba(0,255,65,0.1);">
+  <div class="container">
+    <div class="section-title">
+      <h2>▸ COMO INSTALAR (3 PASSOS)</h2>
+      <div class="line"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px;max-width:900px;margin:0 auto;">
+      <div style="background:var(--bg-card);border:1px solid var(--matrix-dim);border-radius:8px;padding:30px;text-align:center;">
+        <div style="font-family:'Orbitron',monospace;font-size:2rem;color:var(--matrix-green);font-weight:900;margin-bottom:10px;">1</div>
+        <h4 style="color:var(--text-bright);margin-bottom:10px;">Baixe o ZIP</h4>
+        <p style="font-size:0.85rem;color:var(--text);">Clique em "BAIXAR GRÁTIS" (ESSENTIAL) ou compre PRO/Enterprise e receba o link por e-mail.</p>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--matrix-dim);border-radius:8px;padding:30px;text-align:center;">
+        <div style="font-family:'Orbitron',monospace;font-size:2rem;color:var(--matrix-green);font-weight:900;margin-bottom:10px;">2</div>
+        <h4 style="color:var(--text-bright);margin-bottom:10px;">Extraia</h4>
+        <p style="font-size:0.85rem;color:var(--text);">Extraia o ZIP em qualquer pasta. Dentro tem a pasta <code>.opencode/</code>, <code>config/</code> e <code>scripts/</code>.</p>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--matrix-dim);border-radius:8px;padding:30px;text-align:center;">
+        <div style="font-family:'Orbitron',monospace;font-size:2rem;color:var(--matrix-green);font-weight:900;margin-bottom:10px;">3</div>
+        <h4 style="color:var(--text-bright);margin-bottom:10px;">Execute</h4>
+        <p style="font-size:0.85rem;color:var(--text);">Abra PowerShell na pasta e rode: <code style="display:block;margin-top:8px;padding:8px;background:#000;border-radius:4px;">.\scripts\setup.ps1</code></p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;font-size:0.85rem;color:var(--text);">
+      Pronto! Depois é só digitar <code style="background:#000;padding:2px 8px;border-radius:3px;">cd ~/NeoPack</code> e <code style="background:#000;padding:2px 8px;border-radius:3px;">opencode</code>.
+    </div>
+  </div>
+</section>
+
 <section class="pricing" id="pricing">
   <div class="container">
     <div class="section-title">
@@ -1119,17 +1148,17 @@ footer .logo { margin-bottom: 12px; display: block; }
     <div class="pricing-grid">
       <div class="pricing-card">
         <h3>ESSENTIAL</h3>
-        <div class="sub">Faça você mesmo</div>
+        <div class="sub">Download direto</div>
         <div class="price">GRÁTIS</div>
-        <div class="period">Código aberto</div>
+        <div class="period">Sem cadastro</div>
         <ul>
           <li>33 AGENTES ESSENCIAIS — 12 categorias</li>
-          <li>Acesso ao repositório GitHub</li>
-          <li>Configs base para OpenCode</li>
-          <li>Documentação completa</li>
-          <li>Setup manual via tutorial</li>
+          <li>Configs base + MCPs + LSPs</li>
+          <li>Setup em 3 passos (veja abaixo)</li>
+          <li>OpenCode CLI incluso</li>
+          <li>100% open-source</li>
         </ul>
-        <a href="https://github.com/tomfickk-cpu/neopack" class="btn btn-outline" style="width:100%;justify-content:center;">▸ ACESSAR</a>
+        <a href="zip/NeoPack-v3.0.0.zip" class="btn btn-primary" style="width:100%;justify-content:center;background:#00aa41;" download>▸ BAIXAR GRÁTIS</a>
       </div>
       <div class="pricing-card featured">
         <h3>PRO</h3>
