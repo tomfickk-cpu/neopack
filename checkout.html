@@ -126,6 +126,10 @@ h1 {
     </div>
   </div>
 
+  <div class="guarantee-badge" style="text-align:center;margin-bottom:24px;padding:12px;background:rgba(0,255,65,0.05);border:1px solid rgba(0,255,65,0.15);border-radius:6px;font-size:0.8rem;color:var(--matrix-green);">
+    🛡️ Garantia de 7 dias — Risco zero. Se não gostar, devolvemos 100%.
+  </div>
+
   <h1>▸ CHECKOUT</h1>
   <p class="subtitle">Preencha seus dados antes de seguir para o pagamento</p>
 
@@ -205,13 +209,17 @@ h1 {
   const successBox = document.getElementById('successBox');
   const hotmartLink = document.getElementById('hotmartLink');
 
-  // Configuração Hotmart — COLE SEU LINK HOTMART AQUI
-  const HOTMART_LINKS = {
-    pro: '#',       // <-- COLE SEU LINK HOTMART DO PLANO PRO
-    enterprise: '#' // <-- COLE SEU LINK HOTMART DO PLANO ENTERPRISE
+  // 🔧 CONFIGURAÇÃO DE PAGAMENTO
+  // Substitua '#' pelos links reais do seu gateway de pagamento
+  // Hotmart: https://pay.hotmart.com/SEU_CODIGO
+  // Stripe: https://buy.stripe.com/SEU_LINK
+  // PayPal: https://www.paypal.com/checkoutnow/SEU_TOKEN
+  const PAYMENT_LINKS = {
+    pro: '#',       // <-- COLE O LINK DE PAGAMENTO DO PLANO PRO
+    enterprise: '#' // <-- COLE O LINK DE PAGAMENTO DO PLANO ENTERPRISE
   };
 
-  if (planParam && HOTMART_LINKS[planParam]) {
+  if (planParam && PAYMENT_LINKS[planParam]) {
     planoSelect.value = planParam;
   }
 
@@ -270,7 +278,7 @@ h1 {
     formBox.classList.add('hidden');
     successBox.classList.remove('hidden');
 
-    const hotmartUrl = HOTMART_LINKS[plan];
+    const hotmartUrl = PAYMENT_LINKS[plan];
     if (hotmartUrl && hotmartUrl !== '#') {
       hotmartLink.href = hotmartUrl;
       setTimeout(function() {
