@@ -95,14 +95,14 @@ h1 {
   </div>
 
   <div class="download-box" id="downloadBox">
-    <h2>⬇️ SEU DOWNLOAD</h2>
+    <h2>📦 ENTREGA DO SEU PACOTE</h2>
     <p style="font-size:0.85rem;color:var(--text);margin-bottom:20px;">
-      Clique no botão abaixo para baixar o pacote completo.
-      O link expira em 7 dias.
+      Seu pacote é entregue por canal privado — clique no botão abaixo para receber
+      o link de download no WhatsApp junto com o seu código de pedido.
     </p>
-    <a href="zip/NeoPack-PRO-v3.0.0.zip" class="btn btn-primary" id="downloadBtn" download>▸ BAIXAR NEOPACK</a>
+    <a href="#" class="btn btn-primary" id="downloadBtn">▸ RECEBER MEU PACOTE NO WHATSAPP</a>
     <div style="margin-top:16px;font-size:0.75rem;color:rgba(255,255,255,0.3);">
-      ⚡ Link pessoal e intransferível
+      ⚡ Entrega em até 2h em horário comercial · link pessoal e intransferível
     </div>
   </div>
 
@@ -147,15 +147,16 @@ h1 {
     document.getElementById('resumoID').textContent = customer.id;
     document.getElementById('resumoAssinatura').textContent = customer.assinatura;
 
-    // Update download link based on plan
+    // Entrega privada: WhatsApp com pedido preenchido (plano + session id)
     const downloadBtn = document.getElementById('downloadBtn');
-    if (customer.plano === 'enterprise') {
-      downloadBtn.href = 'zip/NeoPack-ENTERPRISE-v3.0.0.zip';
-      downloadBtn.textContent = '▸ BAIXAR NEOPACK ENTERPRISE';
-    } else {
-      downloadBtn.href = 'zip/NeoPack-PRO-v3.0.0.zip';
-      downloadBtn.textContent = '▸ BAIXAR NEOPACK PRO';
-    }
+    const plano = customer.plano === 'enterprise' ? 'ENTERPRISE' : 'PRO';
+    const msg = encodeURIComponent(
+      `Olá! Fiz a compra do NeoPack ${plano} e quero receber meu pacote.\n` +
+      `Pedido: ${customer.id}\nNome: ${customer.nome}\nE-mail: ${customer.email}`
+    );
+    downloadBtn.href = `https://wa.me/5527988971866?text=${msg}`;
+    downloadBtn.target = '_blank';
+    downloadBtn.textContent = `▸ RECEBER NEOPACK ${plano} NO WHATSAPP`;
 
     // Mark as paid
     if (sessionId) {
